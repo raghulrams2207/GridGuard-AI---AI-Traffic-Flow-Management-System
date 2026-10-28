@@ -440,11 +440,6 @@ Contributions, testing, and improvement suggestions are welcome.
 5. Document configuration changes and new dependencies.
 6. Submit a pull request describing the implementation and test results.
 
-## 📄 License
-
-Add a `LICENSE` file and update this section once the project's licensing terms have been chosen. Until then, do not assume that the repository is released under an open-source license.
-
-## 👨‍💻 Project Repository
 
 **GridGuard AI — AI Traffic Flow Management System**
 
