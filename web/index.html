@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GRIDGUARD AI command center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Unbounded:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0a1f;--p:#171335;--p2:#211b4a;--ln:#352d6b;--tx:#f4f1ff;--mu:#a59fd0;--am:#ffb13b;--lo:#3ddc97;--md:#ffb13b;--hi:#ff5a5f;--bl:#6ec1ff;--g:linear-gradient(90deg,#ffb13b,#ff5a5f,#c24bff);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Outfit,"Segoe UI",system-ui,sans-serif;padding-top:env(safe-area-inset-top,0px)}
+h1,h2,h3,.dsp{font-family:Unbounded,Bahnschrift,"Segoe UI",sans-serif}
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:22px;padding:12px 24px;background:rgba(12,10,31,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln)}
+.top b{font-family:Unbounded,sans-serif;letter-spacing:1px}.top a{color:var(--mu);text-decoration:none}.top a:hover{color:var(--tx)}.top .sp{flex:1}
+.cta{display:inline-block;background:var(--g);color:#16102e!important;font-weight:600;padding:10px 20px;border-radius:99px;text-decoration:none;border:0;cursor:pointer}
+.cta.o{background:none;color:var(--tx)!important;border:1px solid var(--mu)}
+.hero{position:relative;overflow:hidden;padding:90px 24px 70px;text-align:center}
+.hero:before,.hero:after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(110px);opacity:.35;z-index:0}
+.hero:before{background:#c24bff;left:-120px;top:-160px}.hero:after{background:#ff7a3b;right:-140px;bottom:-220px}
+.hero>*{position:relative;z-index:1}.hero h1{font-size:clamp(34px,7vw,92px);line-height:1.02;margin:14px auto;max-width:15ch;font-weight:800;text-transform:uppercase}
+.hero h1 span{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:60ch;margin:0 auto 26px;color:var(--mu);font-size:18px}
+.tag{display:inline-block;border:1px solid var(--ln);border-radius:99px;padding:4px 14px;color:var(--mu);font-size:13px;letter-spacing:2px;text-transform:uppercase}
+.lights{display:inline-flex;gap:6px;margin-right:8px;vertical-align:middle}.lights i{width:10px;height:10px;border-radius:50%}
+.mq{overflow:hidden;white-space:nowrap;background:var(--g);color:#16102e;padding:12px 0;font-family:Unbounded,sans-serif;font-weight:800}
+.mq div{display:inline-block;animation:mq 28s linear infinite}@keyframes mq{to{transform:translateX(-50%)}}@media(prefers-reduced-motion:reduce){.mq div{animation:none}html{scroll-behavior:auto}}
+.wrap{max-width:1500px;margin:auto;padding:70px 24px}.wrap h2{font-size:clamp(24px,3.6vw,44px);margin:0 0 14px;text-transform:uppercase;line-height:1.1}.lead{color:var(--mu);max-width:70ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:30px}.st{border:1px solid var(--ln);border-radius:14px;padding:22px;background:var(--p)}
+.st b{display:block;font:800 52px/1 Unbounded,sans-serif;background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}.st span{color:var(--mu)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:30px}.step{background:var(--p);border:1px solid var(--ln);border-radius:14px;padding:20px}.step i{font:800 28px Unbounded,sans-serif;color:var(--am);font-style:normal}.step h3{margin:6px 0;font-size:16px}.step p{margin:0;color:var(--mu)}
+#console{background:#100d2a;border-block:1px solid var(--ln)}.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0}#nav{display:flex;gap:4px;flex:1;flex-wrap:wrap}
+#nav button{background:none;border:0;color:var(--mu);padding:9px 16px;font:inherit;cursor:pointer;border-radius:99px}#nav button.on{background:var(--g);color:#16102e;font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--am);outline-offset:2px}
+.pill{padding:4px 12px;border-radius:99px;background:var(--p2);font-size:13px}.pill b{color:var(--am)}
+.tabp{display:none}.tabp.on{display:block}.prev{display:none;background:#3a2a05;border:1px solid var(--am);padding:10px 14px;border-radius:10px;margin-bottom:14px}
+.g{display:grid;gap:14px}.g2{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}.g3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}@media(max-width:900px){.g2{grid-template-columns:1fr}.top a.h{display:none}}
+.card{background:var(--p);border:1px solid var(--ln);border-radius:14px;padding:14px 16px}.card h2{margin:0 0 8px;font-size:15px}
+.vid{position:relative;background:#000;aspect-ratio:16/9;display:grid;place-items:center;border-radius:10px;overflow:hidden}.vid img,.vid canvas{width:100%;height:100%;object-fit:contain}
+.vid .msg{position:absolute;padding:20px;text-align:center;color:var(--mu)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px;margin-top:10px}.k{background:var(--p2);padding:8px 10px;border-radius:10px}.k span{font-size:12px;color:var(--mu)}.k b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+canvas.ch{width:100%;height:110px;display:block}label{display:block;margin:8px 0 2px;color:var(--mu);font-size:12px}input[type=range]{width:100%;accent-color:var(--am)}
+select,input[type=text],input[type=number]{width:100%;background:var(--p2);color:var(--tx);border:1px solid var(--ln);padding:7px;border-radius:8px;font:inherit}
+.btn{background:var(--g);color:#16102e;border:0;padding:8px 14px;border-radius:99px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}.btn.s{background:var(--p2);color:var(--tx);border:1px solid var(--ln)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.err{background:#4a1d2a;border:1px solid var(--hi);padding:8px 12px;border-radius:10px;margin-bottom:12px;display:none}
+.bar2{height:10px;background:var(--p2);border-radius:5px;overflow:hidden;margin:3px 0 8px}.bar2 i{display:block;height:100%;background:var(--g);width:0}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--ln)}th{color:var(--mu);font-weight:400}
+.lo{color:var(--lo)}.md{color:var(--md)}.hi{color:var(--hi)}.best{background:#1d5a4a}.note{color:var(--mu);font-size:12px}.big{font:800 44px Unbounded,sans-serif;font-variant-numeric:tabular-nums}
+.chk label{display:flex;gap:8px;align-items:center;color:var(--tx);font-size:14px;margin:6px 0}.chk input{width:auto}a{color:var(--bl)}
+.advbox h3{margin:0 0 6px;font-size:15px}.advbox ul{margin:4px 0 10px;padding-left:18px}.advbox .lvl{display:inline-block;padding:2px 12px;border-radius:99px;color:#16102e;font-weight:700;margin-bottom:6px}
+details{border:1px solid var(--ln);border-radius:12px;padding:14px 18px;margin-top:10px;background:var(--p)}summary{cursor:pointer;font-weight:600}details p{color:var(--mu);margin:8px 0 0}
+.accb{background:#b3202a;color:#fff;font-weight:700;padding:10px 14px;border-radius:10px;margin-bottom:10px;animation:pl 1s infinite alternate}@keyframes pl{to{background:#e5484d}}@media(prefers-reduced-motion:reduce){.accb{animation:none}}.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}ol.how{padding-left:20px}ol.how li{margin:8px 0}
+footer{padding:40px 24px;text-align:center;color:var(--mu)}footer b{font-family:Unbounded,sans-serif;color:var(--tx)}
+</style></head><body>
+<div class="top"><span class="lights"><i style="background:#ff5a5f"></i><i style="background:#ffb13b"></i><i style="background:#3ddc97"></i></span><b>GRIDGUARD AI</b><span class="sp"></span><a class="h" href="#about">About</a><a class="h" href="#how">How it works</a><a class="h" href="#console">Command center</a><a class="h" href="#faq">FAQ</a><a class="cta" href="#console">Launch</a></div>
+<section class="hero"><span class="tag">Vision-driven gridlock prevention</span><h1>Stop gridlock <span>before it spreads</span></h1>
+<p>GRIDGUARD AI reads traffic video with YOLO, scores cascading gridlock risk across connected junctions, and tests fixes in a SUMO simulation before anyone touches a signal.</p>
+<div class="row" style="justify-content:center"><a class="cta" href="#console">Open the command center</a><a class="cta o" href="#how">See how it works</a></div></section>
+<div class="mq"><div>DETECT &nbsp;•&nbsp; PREDICT &nbsp;•&nbsp; SIMULATE &nbsp;•&nbsp; VERIFY &nbsp;•&nbsp; DETECT &nbsp;•&nbsp; PREDICT &nbsp;•&nbsp; SIMULATE &nbsp;•&nbsp; VERIFY &nbsp;•&nbsp; DETECT &nbsp;•&nbsp; PREDICT &nbsp;•&nbsp; SIMULATE &nbsp;•&nbsp; VERIFY &nbsp;•&nbsp; DETECT &nbsp;•&nbsp; PREDICT &nbsp;•&nbsp; SIMULATE &nbsp;•&nbsp; VERIFY &nbsp;•&nbsp;</div></div>
+<section class="wrap" id="about"><span class="tag">About the project</span><h2 style="margin-top:14px">Congestion spreads. So should the warning.</h2>
+<p class="lead">A jam at one junction rarely stays there. When a road ahead cannot take more cars, the queue backs up into the junction behind it and then the next. GRIDGUARD AI measures the queue on camera, estimates how far the trouble could travel, and compares fixes under the same conditions before recommending one. It then checks whether the fix worked.</p>
+<div class="stats"><div class="st"><b>4</b><span>vehicle classes detected: car, motorcycle, bus, truck</span></div><div class="st"><b>6</b><span>signalised junctions in the SUMO network</span></div><div class="st"><b>5</b><span>stress scenarios, from normal to intervention failure</span></div><div class="st"><b>3</b><span>controllers compared on identical demand</span></div></div></section>
+<section class="wrap" id="how" style="padding-top:0"><h2>How it works</h2><div class="steps">
+<div class="step"><i>01</i><h3>Discover</h3><p>Find a public traffic camera on ARGOS ATLAS and note its source and access rules.</p></div>
+<div class="step"><i>02</i><h3>Detect</h3><p>OpenCV and a pretrained YOLO nano model draw boxes on cars, bikes, buses and trucks.</p></div>
+<div class="step"><i>03</i><h3>Measure</h3><p>Count vehicles in a queue region, estimate occupancy and track how fast the queue grows.</p></div>
+<div class="step"><i>04</i><h3>Predict</h3><p>A transparent risk score and a junction graph show where a bottleneck could spill back.</p></div>
+<div class="step"><i>05</i><h3>Simulate</h3><p>SUMO with TraCI tests green-time changes, downstream protection and rerouting.</p></div>
+<div class="step"><i>06</i><h3>Verify</h3><p>Re-measure after an action. If the queue did not improve, reject it and try the next best.</p></div></div></section>
+<div class="mq" style="background:var(--p2);color:var(--tx)"><div>LIVE PERFORMANCE &nbsp;•&nbsp; RISK NETWORK &nbsp;•&nbsp; INTERVENTION LAB &nbsp;•&nbsp; LIVE PERFORMANCE &nbsp;•&nbsp; RISK NETWORK &nbsp;•&nbsp; INTERVENTION LAB &nbsp;•&nbsp; LIVE PERFORMANCE &nbsp;•&nbsp; RISK NETWORK &nbsp;•&nbsp; INTERVENTION LAB &nbsp;•&nbsp; LIVE PERFORMANCE &nbsp;•&nbsp; RISK NETWORK &nbsp;•&nbsp; INTERVENTION LAB</div></div>
+<div id="console"><main class="wrap" style="padding-top:40px"><span class="tag">Command center</span><div class="bar"><nav id="nav"></nav><span class="pill">Source: <b id="src">none</b></span><span class="pill" id="stat">starting</span></div><div class="prev" id="prev"><b>Preview mode.</b> You are seeing sample data and a sample animation, not real detection. The real app streams YOLO from your own video.</div><div class="err" id="err"></div>
+
+<section id="live" class="tabp on"><div class="g g2"><div>
+<div class="card"><div class="accb" id="accb" hidden>POSSIBLE ACCIDENT DETECTED. Alert sent.</div><div class="vid"><img id="vimg" alt="Live YOLO detections" hidden><div class="msg" id="vmsg">No video yet. Upload a traffic clip, enter a permitted stream URL, or use a webcam.</div></div>
+<div class="kpis" id="kpis"></div></div>
+<div class="g g3" style="margin-top:14px">
+<div class="card"><h2>Throughput: FPS</h2><canvas class="ch" id="cFps"></canvas><div class="note">Frames per second on CPU. Blue line is FPS.</div></div>
+<div class="card"><h2>Model speed: inference ms</h2><canvas class="ch" id="cInf"></canvas><div class="note">Time spent in YOLO per frame.</div></div>
+<div class="card"><h2>Vehicles over time</h2><canvas class="ch" id="cVeh"></canvas><div class="note">Blue: whole frame. Amber: inside the queue region.</div></div></div></div>
+<div class="g">
+<div class="card"><h2>Video and camera source</h2><input type="file" id="file" accept="video/*" hidden>
+<div class="row"><button class="btn" id="up">Upload video</button><button class="btn s" id="scan">Scan cameras</button></div>
+<label for="cams">Connected camera</label><select id="cams"><option value="">Press Scan cameras</option></select>
+<label for="vids">Video library (data/videos folder)</label><div class="row" style="margin-top:0"><select id="vids" style="flex:1"><option value="">No videos yet</option></select><button class="btn s" id="pv">Play</button></div>
+<label for="path">Video file path on this computer</label><div class="row" style="margin-top:0"><input type="text" id="path" placeholder="C:\\Videos\\traffic.mp4" style="flex:1"><button class="btn s" id="pp">Open</button></div>
+<label for="url">Stream URL (only if the source permits reuse)</label><div class="row" style="margin-top:0"><input type="text" id="url" placeholder="https://… or rtsp://…" style="flex:1"><button class="btn s" id="go">Open</button></div>
+<div class="note">IP cameras usually give an rtsp:// address. Close other apps using the camera first.</div></div>
+<div class="card"><h2>Detector settings</h2>
+<label>Confidence <b id="vc"></b></label><input type="range" id="conf" min="5" max="95" step="5">
+<label>Image size</label><select id="imgsz"><option>320</option><option>416</option><option>512</option><option>640</option></select>
+<label>Queue region (fractions of frame)</label>
+<div class="row"><div style="flex:1">x<input type="range" id="rx" min="0" max="90"></div><div style="flex:1">y<input type="range" id="ry" min="0" max="90"></div></div>
+<div class="row"><div style="flex:1">width<input type="range" id="rw" min="10" max="100"></div><div style="flex:1">height<input type="range" id="rh" min="10" max="100"></div></div>
+<label>Queue capacity: vehicles that fill the region <b id="vcap"></b></label><input type="range" id="cap" min="3" max="40">
+<label>Downstream congestion input, 0 to 1 <b id="vds"></b></label><input type="range" id="ds" min="0" max="100">
+<div class="chk"><label><input type="checkbox" id="trk"> ByteTrack unique IDs</label><label><input type="checkbox" id="rt" checked> Play at video speed</label><label><input type="checkbox" id="run" checked> Detector running</label></div>
+<a class="btn s" style="display:inline-block;text-decoration:none" href="/api/export.csv">Download live metrics CSV</a></div>
+<div class="card"><h2>Risk score</h2><div class="big" id="R">0.00</div><div id="Rl" class="note"></div><div id="comp"></div>
+<div class="note">R = 0.35 Q + 0.25 O + 0.20 G + 0.20 D. A heuristic score, not a calibrated probability.</div></div>
+<div class="card"><h2>Suggestions to avoid traffic</h2><div class="advbox"></div></div>
+<div class="card"><h2>Ambulance alert (demo)</h2>
+<div class="chk"><label><input type="checkbox" id="alOn"> Armed: watch for accidents</label></div>
+<label for="alTo">Phone number</label><input type="text" id="alTo" placeholder="+919876543210">
+<label for="alCd">Minimum seconds between alerts</label><input type="number" id="alCd" value="60" min="10" max="600">
+<div class="row"><button class="btn s" id="alTest">Send test alert</button></div><div class="note" id="alProv" style="margin-top:8px"></div>
+<ul id="alLog" style="padding-left:18px;margin:8px 0 0"></ul>
+<div class="note">Looks for two moving vehicles that overlap and stop, or a vehicle stalled while traffic flows. It can be wrong. The message goes only to the number you enter, not to real emergency services. In a real emergency call 108.</div></div>
+<div class="card"><h2>Vehicle classes</h2><div id="cls"></div></div></div></div></section>
+
+<section id="net" class="tabp"><div class="g g2"><div class="card"><h2>Cascading risk across connected intersections</h2>
+<svg id="svg" viewBox="0 0 560 280" style="width:100%"></svg><div class="note">Illustrative five-junction graph. The camera feeds J1 and risk propagates downstream. It is not inferred from the video or a real road map.</div></div>
+<div><div class="card"><h2>Bottleneck ranking</h2><table id="rank"></table></div>
+<div class="card" style="margin-top:14px"><h2>Suggestions to avoid traffic</h2><div class="advbox"></div></div>
+<div class="card" style="margin-top:14px"><h2>Risk timeline (live)</h2><canvas class="ch" id="cRisk"></canvas><div class="note">Low below 0.40, medium 0.40 to 0.69, high 0.70 and above.</div></div></div></div></section>
+
+<section id="simu" class="tabp"><div class="card"><h2>Intervention lab</h2><div id="sumost" class="note" style="margin-bottom:8px">Checking SUMO…</div>
+<div class="row"><div><label>Scenario</label><select id="sc"><option value="normal">Normal traffic</option><option value="peak">Peak traffic</option><option value="blockage" selected>Road blockage</option><option value="saturation">Downstream saturation</option><option value="failure">Intervention failure</option></select></div>
+<div><label>Seed</label><input type="number" id="seed" value="1"></div><div><label>Repeat runs</label><input type="number" id="runs" value="2" min="1" max="20"></div>
+<div style="align-self:end"><button class="btn" id="runsim">Run comparison</button></div></div>
+<div class="note"><span id="eng"></span> Same demand and seeds for every controller. Results are what the simulation measured, not real-world claims. SUMO runs can take a minute or two.</div></div>
+<div id="simout" style="display:none" class="g" style="margin-top:14px">
+<div class="card" style="margin-top:14px"><h2>Measured comparison (mean of runs)</h2><table id="cmp"></table></div>
+<div class="g g2"><div class="card"><h2>Total queue over time</h2><canvas class="ch" id="cQ" style="height:200px"></canvas>
+<div class="note">Gray: fixed-time. Blue: local queue-based. Amber: GRIDGUARD. Shaded band: disruption.</div></div>
+<div class="card"><h2>GRIDGUARD risk by junction</h2><canvas class="ch" id="cHeat" style="height:200px"></canvas><div class="note">Rows J1 to J5, time to the right. Green is low, red is high.</div></div></div>
+<div class="card"><h2>Decision log: candidate costs and reassessment</h2><div style="max-height:320px;overflow:auto"><table id="log"></table></div>
+<div class="note">J = 0.4 average queue + 0.3 worst queue + 2 spillback events + 0.5 overflow, over a 6-step look-ahead. Lowest cost wins. If the queue has not improved after 3 steps the action is rejected and the next best is tried.</div></div></div></section>
+
+<section id="argos" class="tabp"><div class="g g2"><div class="card"><h2>About ARGOS ATLAS</h2>
+<p>ARGOS ATLAS is a map that gathers traffic cameras and other context layers that are already public on official portals, and shows where each one comes from. Think of it as a phone book for public traffic cameras.</p>
+<p>In GRIDGUARD it has one job: helping you find a camera over a road or junction worth studying. Flights, ships and other layers are not needed.</p>
+<h3 style="font-size:15px">How to use it with GRIDGUARD</h3><ol class="how"><li>Open the map and zoom to a road or junction with steady traffic.</li><li>Click a camera. Note its name, location and the source it credits.</li><li>Check whether it is live video or a still image that refreshes every few seconds or minutes.</li><li>Read the source's licence and reuse terms.</li><li>If the source allows it and gives a direct stream address, paste that address into <b>Stream URL</b> on the Live detection tab.</li><li>If not, use a traffic clip you are permitted to use, upload it, and credit the ARGOS camera as the discovery source.</li></ol>
+<div class="row"><a class="btn" href="https://www.argosatlas.com/" target="_blank" rel="noopener">Open ARGOS ATLAS</a><a class="btn s" href="https://www.argosatlas.com/en/sobre/" target="_blank" rel="noopener">About the project</a><a class="btn s" href="https://www.argosatlas.com/en/fuentes-y-metodologia/" target="_blank" rel="noopener">Sources and methodology</a></div></div>
+<div class="card"><h2>Ground rules</h2><ul><li>Being on the map does not mean a stream your program can read. Always check.</li><li>Do not scrape pages or bypass access controls. A browser player address is not a public API.</li><li>Still images are snapshots only. Use video for queue growth.</li><li>No face or number-plate recognition.</li><li>One camera shows one spot. Use SUMO for connected-road tests and label which data is which.</li><li>Analysing a camera here never controls the real junction.</li></ul></div></div></section>
+</main></div>
+<section class="wrap" id="faq"><h2>FAQ</h2><details><summary>Does GRIDGUARD control real traffic lights?</summary><p>No. It measures, scores and recommends. Fixes are tested only in simulation.</p></details><details><summary>Is the risk score a probability?</summary><p>No. It is a transparent heuristic: R = 0.35Q + 0.25O + 0.20G + 0.20D, tuned against simulation. Low is below 0.40, medium is 0.40 to 0.69 and high is 0.70 or more.</p></details><details><summary>How does the ambulance alert work?</summary><p>With tracking on, GRIDGUARD watches for two moving vehicles that overlap and stop, or a vehicle that stalls while traffic keeps flowing. It then sends a text to the number you set. For the demo that is a teammate. It is a heuristic, so expect false alarms, and it never contacts real emergency services.</p></details><details><summary>Do I need a GPU?</summary><p>No. It runs YOLO nano on the CPU. Use a smaller image size and a short clip if it feels slow.</p></details><details><summary>Where do the simulation numbers come from?</summary><p>From SUMO runs on a generated 6-junction grid with synthetic demand. They show how the controllers compare there, not how a real city behaves.</p></details><details><summary>Can I use my own video or camera?</summary><p>Yes. Upload a clip, pick a connected camera, open a file path, or paste a stream address you are allowed to use.</p></details></section>
+<footer><b>GRIDGUARD AI</b><br>Detect, predict, simulate, verify. Built for a hackathon prototype.</footer>
+<script>
+const $=i=>document.getElementById(i),T=[["live","Live detection"],["net","Risk network"],["simu","Intervention lab"],["argos","About ARGOS ATLAS"]];
+$("nav").innerHTML=T.map(t=>`<button data-t="${t[0]}">${t[1]}</button>`).join("");
+function tab(id){document.querySelectorAll(".tabp").forEach(s=>s.classList.toggle("on",s.id==id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.t==id));if(id=="simu"&&SIM)drawSim()}
+$("nav").onclick=e=>e.target.dataset.t&&tab(e.target.dataset.t);tab("live");
+function line(id,ser,o={}){const c=$(id),d=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;if(!w)return;c.width=w*d;c.height=h*d;const g=c.getContext("2d");g.scale(d,d);
+const all=ser.flatMap(s=>s.d);if(!all.length)return;const lo=o.min??Math.min(...all),hi=o.max??Math.max(...all,lo+1);g.strokeStyle="#2c5560";for(let i=0;i<4;i++){g.beginPath();g.moveTo(0,h*i/3);g.lineTo(w,h*i/3);g.stroke()}
+if(o.band){g.fillStyle="rgba(229,96,63,.18)";g.fillRect(o.band[0]*w,0,(o.band[1]-o.band[0])*w,h)}
+(o.lines||[]).forEach(v=>{g.strokeStyle="#e5603f";g.setLineDash([4,4]);const y=h-(v-lo)/(hi-lo)*(h-4)-2;g.beginPath();g.moveTo(0,y);g.lineTo(w,y);g.stroke();g.setLineDash([])});
+ser.forEach(s=>{g.strokeStyle=s.c;g.lineWidth=2;g.beginPath();s.d.forEach((v,i)=>{const x=i/Math.max(s.d.length-1,1)*w,y=h-(v-lo)/(hi-lo||1)*(h-4)-2;i?g.lineTo(x,y):g.moveTo(x,y)});g.stroke()});
+g.fillStyle="#8fb0b2";g.font="11px sans-serif";g.fillText(hi.toFixed(o.dp??0),4,12);g.fillText(lo.toFixed(o.dp??0),4,h-4)}
+const post=(u,b)=>fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b||{})}).then(async r=>{const j=await r.json();if(!r.ok)throw new Error(j.error||"Request failed");return j});
+const fail=e=>{const x=$("err");x.textContent=e.message;x.style.display="block"};
+let dbt,SET={};function set(p){Object.assign(SET,p);clearTimeout(dbt);dbt=setTimeout(()=>post("/api/settings",SET).catch(fail),150)}
+const roi=()=>set({roi:[+$("rx").value/100,+$("ry").value/100,+$("rw").value/100,+$("rh").value/100]});
+$("conf").oninput=e=>{$("vc").textContent=(e.target.value/100).toFixed(2);set({conf:e.target.value/100})};$("imgsz").onchange=e=>set({imgsz:+e.target.value});
+["rx","ry","rw","rh"].forEach(i=>$(i).oninput=roi);$("cap").oninput=e=>{$("vcap").textContent=e.target.value;set({cap:+e.target.value})};
+$("ds").oninput=e=>{$("vds").textContent=(e.target.value/100).toFixed(2);set({downstream:e.target.value/100})};
+$("trk").onchange=e=>set({track:e.target.checked});$("rt").onchange=e=>set({realtime:e.target.checked});$("run").onchange=e=>set({run:e.target.checked});
+$("up").onclick=()=>$("file").click();$("file").onchange=async e=>{const f=new FormData();f.append("file",e.target.files[0]);$("err").style.display="none";
+try{const r=await fetch("/api/source/upload",{method:"POST",body:f}),j=await r.json();if(!r.ok)throw new Error(j.error);vids()}catch(x){fail(x)}};
+const bad=()=>{$("err").style.display="none"};
+async function vids(){const v=(await (await fetch("/api/videos")).json()).videos;$("vids").innerHTML=v.length?v.map(x=>`<option value="${x.name}">${x.name} (${x.mb} MB)</option>`).join(""):"<option value=''>No videos yet</option>"}
+$("scan").onclick=async()=>{$("scan").textContent="Scanning…";try{const c=(await (await fetch("/api/cameras")).json()).cameras;$("cams").innerHTML=c.length?c.map(i=>`<option value="${i}">Camera ${i}</option>`).join(""):"<option value=''>No camera found</option>";if(c.length)post("/api/source/camera",{index:+c[0]}).catch(fail);else fail(new Error("No camera found. Check it is plugged in, allowed in Windows privacy settings, and not used by another app."))}catch(e){fail(e)}$("scan").textContent="Scan cameras"};
+$("cams").onchange=e=>e.target.value!==""&&post("/api/source/camera",{index:+e.target.value}).catch(fail);
+$("pv").onclick=()=>$("vids").value&&(bad(),post("/api/source/video",{name:$("vids").value}).catch(fail));
+$("pp").onclick=()=>(bad(),post("/api/source/path",{path:$("path").value}).catch(fail));vids();
+const openUrl=u=>post("/api/source/url",{url:u}).then(()=>tab("live")).catch(fail);
+$("go").onclick=()=>openUrl($("url").value);
+let first=true,H=[];const lv=r=>r>=.7?"hi":r>=.4?"md":"lo",nm={Q:"Q queue severity (0.35)",O:"O occupancy (0.25)",G:"G queue growth (0.20)",D:"D downstream risk (0.20)"};
+async function poll(){try{const d=await (await fetch("/api/state")).json(),s=d.st;H=d.hist;
+if(first){first=false;const S=d.s;$("conf").value=S.conf*100;$("vc").textContent=S.conf.toFixed(2);$("imgsz").value=S.imgsz;["rx","ry","rw","rh"].forEach((k,i)=>$(k).value=S.roi[i]*100);$("cap").value=S.cap;$("vcap").textContent=S.cap;$("ds").value=S.downstream*100;$("vds").textContent=S.downstream.toFixed(2);$("trk").checked=S.track;SET={roi:S.roi}}
+$("src").textContent=s.label;$("stat").textContent=s.status;const on=s.source!==null&&s.frames>0;if(on&&$("vimg").hidden&&!DEMO){$("vimg").src="/api/stream";$("vimg").hidden=false}$("vmsg").style.display=on?"none":"block";$("vmsg").textContent=s.error?"":s.status+(s.source===null?". Upload a traffic clip, enter a permitted stream URL, or use a webcam.":"");
+$("err").style.display=s.error?"block":"none";if(s.error)$("err").textContent=s.error;
+const K=[["FPS",s.fps.toFixed(1)],["Inference ms",s.infer_ms.toFixed(0)],["Frame ms",s.latency_ms.toFixed(0)],["Vehicles",s.count],["In region",s.roi_count],["Occupancy",(s.occ*100).toFixed(1)+"%"],["Growth /5s",(s.growth>=0?"+":"")+s.growth.toFixed(1)],["Unique IDs",$("trk").checked?s.unique:"off"],["CPU",d.sys.cpu.toFixed(0)+"%"],["RAM",d.sys.ram.toFixed(0)+"%"]];
+$("kpis").innerHTML=K.map(k=>`<div class="k"><span>${k[0]}</span><b>${k[1]}</b></div>`).join("");
+line("cFps",[{d:H.map(h=>h.fps),c:"#5ab0d6"}],{min:0,dp:1});line("cInf",[{d:H.map(h=>h.infer_ms),c:"#f2b134"}],{min:0});line("cVeh",[{d:H.map(h=>h.vehicles),c:"#5ab0d6"},{d:H.map(h=>h.roi_count),c:"#f2b134"}],{min:0});
+$("R").textContent=s.R.toFixed(2);$("R").className="big "+lv(s.R);$("Rl").textContent=({lo:"Low",md:"Medium",hi:"High"})[lv(s.R)]+" risk";
+$("comp").innerHTML=Object.keys(nm).map(k=>`<div class="note">${nm[k]}: ${s.comp[k].toFixed(2)}</div><div class="bar2"><i style="width:${s.comp[k]*100}%"></i></div>`).join("");
+const cl=s.classes,mx=Math.max(1,...Object.values(cl));$("cls").innerHTML=Object.keys(cl).length?Object.keys(cl).map(k=>`<div class="note">${k}: ${cl[k]}</div><div class="bar2"><i style="width:${cl[k]/mx*100}%"></i></div>`).join(""):'<div class="note">No detections yet.</div>';
+renderAdv(d.advice);renderAl(d.al);line("cRisk",[{d:H.map(h=>h.risk),c:"#f2b134"}],{min:0,max:1,dp:1,lines:[.4,.7]});drawNet(d.graph)}catch(e){$("stat").textContent="server offline"}}
+const P={J1:[60,120],J2:[200,120],J3:[360,120],J4:[280,225],J5:[500,120]},col=v=>v>=70?"#e5603f":v>=35?"#f2b134":"#4fb286";
+function drawNet(g){let h="";g.edges.forEach(e=>{const a=P[e[0]],b=P[e[1]];h+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#5f8a92" stroke-width="${2+e[2]*5}"/>`});
+Object.keys(P).forEach(n=>{const v=g.risks[n];h+=`<circle cx="${P[n][0]}" cy="${P[n][1]}" r="${24+v*.15}" fill="${col(v)}" stroke="#e8f1ee" stroke-width="2"/><text x="${P[n][0]}" y="${P[n][1]+5}" text-anchor="middle" fill="#10222a" font-weight="700">${n}</text><text x="${P[n][0]}" y="${P[n][1]+52}" text-anchor="middle" fill="#8fb0b2" font-size="12">${v.toFixed(0)}/100</text>`});$("svg").innerHTML=h;
+$("rank").innerHTML="<tr><th>Junction</th><th>Risk</th><th>Level</th></tr>"+Object.entries(g.risks).sort((a,b)=>b[1]-a[1]).map(([n,v])=>`<tr><td>${n}</td><td>${v.toFixed(1)}</td><td class="${v>=70?"hi":v>=35?"md":"lo"}">${v>=70?"High":v>=35?"Medium":"Low"}</td></tr>`).join("")}
+function renderAdv(a){const c={low:"#4fb286",medium:"#f2b134",high:"#e5603f"}[a.level];const li=x=>"<ul>"+x.map(y=>`<li>${y}</li>`).join("")+"</ul>";
+const h=`<span class="lvl" style="background:${c}">${a.level.toUpperCase()}</span><h3>${a.headline}</h3><b>For operators</b>${li(a.operator)}<b>For travellers</b>${li(a.travellers)}<div class="note">${a.note}</div>`;document.querySelectorAll(".advbox").forEach(e=>e.innerHTML=h)}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));let alInit=false;
+function renderAl(a){if(!a)return;if(!alInit){alInit=true;$("alOn").checked=a.cfg.enabled;$("alTo").value=a.cfg.to;$("alCd").value=a.cfg.cooldown}
+$("accb").hidden=!a.active;const p=a.providers;$("alProv").textContent=p.twilio||p.telegram?"Delivery: "+[p.twilio&&"SMS (Twilio)",p.telegram&&"Telegram"].filter(Boolean).join(" and "):"No SMS service set up yet, so alerts show on screen only. See the README, section Accident alerts.";
+$("alLog").innerHTML=a.log.length?a.log.slice().reverse().map(e=>`<li><b>${esc(e.kind)}</b> at ${esc(e.time)}<br>${esc(e.results.join("; "))}${e.img?` <a href="/alerts/${esc(e.img)}" target="_blank">photo</a>`:""}</li>`).join(""):"<li class='note'>No alerts yet.</li>"}
+const alSave=()=>post("/api/alerts/config",{enabled:$("alOn").checked,to:$("alTo").value.trim(),cooldown:+$("alCd").value||60}).catch(fail);
+$("alOn").onchange=alSave;$("alTo").onchange=alSave;$("alCd").onchange=alSave;$("alTest").onclick=async()=>{await alSave();post("/api/alerts/test").catch(fail)};
+let SIM=null;$("runsim").onclick=async()=>{$("runsim").textContent="Running SUMO…";try{SIM=await post("/api/sim",{scenario:$("sc").value,seed:+$("seed").value,runs:+$("runs").value});drawSim();$("eng").textContent="Engine: "+SIM.engine+"."}catch(e){fail(e)}$("runsim").textContent="Run comparison"};
+function drawSim(){$("simout").style.display="grid";const R=SIM.results,ks=Object.keys(R),M=[["avg_delay_s","Avg delay (s per vehicle)"],["max_queue","Max queue (veh)"],["throughput","Vehicles through"],["spillback_events","Spillback events"],["overflow","Pending or stuck (veh)"],["interventions","Interventions"],["recovery_s","Recovery time (s)"]],lowerBetter=k=>k!="throughput";
+let t="<tr><th>Metric</th>"+ks.map(k=>`<th>${k}</th>`).join("")+"</tr>";M.forEach(([m,l])=>{const v=ks.map(k=>R[k].metrics[m]),ok=v.filter(x=>x!==null);const b=m=="interventions"?null:ok.length>1?(lowerBetter(m)?Math.min(...ok):Math.max(...ok)):null;t+=`<tr><td>${l}</td>`+v.map(x=>`<td class="${x!==null&&x===b?"best":""}">${x===null?"not recovered / n/a":x}</td>`).join("")+"</tr>"});$("cmp").innerHTML=t;
+const w=SIM.window?[SIM.window[0]/SIM.steps,SIM.window[1]/SIM.steps]:null,C=["#8fb0b2","#5ab0d6","#f2b134"];
+line("cQ",ks.map((k,i)=>({d:R[k].timeline.total,c:C[i]})),{min:0,band:w});
+const c=$("cHeat"),d=devicePixelRatio||1,W=c.clientWidth,Hh=c.clientHeight;c.width=W*d;c.height=Hh*d;const g=c.getContext("2d");g.scale(d,d);const N=R.GRIDGUARD.timeline.nodes,ns=Object.keys(N),cw=W/SIM.steps,ch=Hh/ns.length;
+ns.forEach((n,r)=>N[n].forEach((v,i)=>{g.fillStyle=v>=.7?"#e5603f":v>=.4?"#f2b134":"#2f7d62";g.globalAlpha=.35+.65*Math.min(1,v/.7);g.fillRect(i*cw,r*ch,cw+1,ch-2)}));g.globalAlpha=1;g.fillStyle="#fff";g.font="12px sans-serif";ns.forEach((n,r)=>g.fillText(n,4,r*ch+ch/2+4));
+const L=R.GRIDGUARD.log,cn=Object.keys(L[0].costs);$("log").innerHTML="<tr><th>Time (s)</th><th>Chosen</th>"+cn.map(k=>`<th>${k}</th>`).join("")+"<th>Reassessed</th></tr>"+L.map(e=>`<tr><td>${e.t}</td><td><b>${e.chosen}</b></td>`+cn.map(k=>`<td>${e.costs[k]??"rejected"}</td>`).join("")+`<td>${e.reassess?"Rejected "+e.failed:""}</td></tr>`).join("")}
+let DEMO=false;const REAL=window.fetch.bind(window);
+const sumoMsg=j=>{$("sumost").innerHTML=j.ok?'<b class="lo">Real SUMO + TraCI is ready.</b> Network: 6 junctions, 3x2 grid.':'<b class="hi">SUMO is not installed here, so the built-in model will run instead.</b> '+(j.reason||"")+' Fix: with the environment active, run <code>pip install eclipse-sumo traci sumolib</code> and restart.'};
+async function probe(){try{const r=await REAL("/api/state");if(!r.ok||!(r.headers.get("content-type")||"").includes("json"))throw 0}catch(e){startDemo()}}
+function dadv(R,comp,risks){const lvl=R>=.7?"high":R>=.4?"medium":"low",worst=Object.keys(risks).sort((a,b)=>risks[b]-risks[a])[0];let ops=[],trv=[],head;
+if(lvl=="low"){ops=["Keep the current signal plan.","Keep watching: risk is below 0.40."];trv=["Normal travel. No need to change route or time."];head="Traffic is flowing"}
+else{if(comp.Q>=.5)ops.push("Queue is long: lengthen green on the busiest approach by 10 to 15 s. Test it in the Intervention lab first.");if(comp.G>=.4)ops.push("Queue is growing fast: act now, before it reaches the next junction.");if(comp.D>=.4)ops.push("Downstream is filling: hold releases into "+worst+" so it can clear.");if(comp.O>=.5)ops.push("Road space is mostly full: limit new vehicles entering this approach.");if(!ops.length)ops.push("Several signals are rising together: recheck in a minute.");ops.push("Watch "+worst+" first. It has the highest cascade risk ("+risks[worst].toFixed(0)+"/100).");trv=["Expect delays on this corridor.","Leave earlier or delay non-urgent trips."];head="Congestion is building";
+if(lvl=="high"){head="Gridlock risk is high";ops.push("Send traffic staff to the bottleneck if possible.","Keep one lane clear for emergency vehicles.","Re-measure after each change. If risk does not fall, try the next action.");trv=["Avoid this corridor now.","Delay non-urgent trips by 20 to 30 minutes."]}}
+return{level:lvl,headline:head,operator:ops,travellers:trv,note:"Advice only. This app does not control real traffic lights."}}
+function dsim(p){const sc=p.scenario,S=120,dist=sc=="blockage"||sc=="failure"?[30,70]:sc=="saturation"?[30,80]:null,base={normal:12,peak:60,blockage:45,saturation:50,failure:45}[sc],ns=["A0","B0","C0","A1","B1","C1"];
+const mk=(f,b)=>{const total=[],nodes={};ns.forEach(n=>nodes[n]=[]);for(let i=0;i<S;i++){const inb=dist&&i>=dist[0]&&i<dist[1]+20,v=base*(.6+.4*Math.sin(i/9))*(inb?b:1)*f;total.push(Math.round(v));ns.forEach((n,k)=>nodes[n].push(+Math.min(1,v/120*(.6+.12*k)).toFixed(3)))}return{total,maxrisk:total.map(v=>Math.min(1,v/110)),nodes}};
+const res={"Fixed-time":[1,2.2],"Local queue-based":[.95,2.4],"GRIDGUARD":[.8,1.3]},out={},acts=["Keep timing","A: extend green","B: protect downstream","C: adaptive rerouting"];
+Object.keys(res).forEach(k=>{const tl=mk(...res[k]),avg=tl.total.reduce((a,x)=>a+x,0)/S,g=k=="GRIDGUARD";out[k]={metrics:{avg_delay_s:+(avg*1.9).toFixed(1),max_queue:Math.max(...tl.total)/4|0,throughput:Math.round(1900-avg*3),spillback_events:Math.round(avg/9*(g?.4:1)),overflow:g?0:Math.round(avg/2),interventions:g?8:0,recovery_s:dist?(g?40:150):null},timeline:tl,log:[]}});
+out.GRIDGUARD.log=Array.from({length:19},(_,i)=>({t:(i+1)*60,chosen:acts[i%4],reassess:i%6==4,failed:i%6==4?"A: extend green":"",costs:Object.fromEntries(acts.map((a,j)=>[a,+(6+((i*7+j*3)%9)+j*.4).toFixed(1)]))}));
+return{scenario:sc,seed:1,runs:p.runs,window:dist,fail:sc=="failure"?[35,60]:null,steps:S,dt:10,engine:"PREVIEW SAMPLE DATA, not measured. The real app runs SUMO and shows its measured numbers here.",results:out}}
+function startDemo(){DEMO=true;$("prev").style.display="block";let VID=null;const D={alOn:false,alTo:"",alog:[],accT:-1e9,label:"Sample animation",roi:[.05,.45,.9,.5],conf:.35,imgsz:416,cap:12,downstream:.3,track:false,realtime:true,run:true,hist:[],cars:[],ema:null,n:0,rc:0,occ:0,cl:{}};
+for(let i=0;i<16;i++)D.cars.push({l:i%3,x:Math.random()*700,t:["Car","Car","Truck","Bus","Motorcycle"][i%5]});
+const W=640,H=360,cv=document.createElement("canvas");cv.width=W;cv.height=H;document.querySelector(".vid").prepend(cv);const g=cv.getContext("2d"),cong=()=>.5+.5*Math.sin(performance.now()/9000);let last=performance.now();
+function draw(){const now=performance.now(),dt=Math.min(.1,(now-last)/1000);last=now;const c=cong(),act=5+Math.round(c*11);g.fillStyle="#1b1b2a";g.fillRect(0,0,W,H);g.fillStyle="#2a2a3d";g.fillRect(0,150,W,190);g.strokeStyle="#6b6b8f";g.setLineDash([18,14]);[213,277].forEach(y=>{g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()});g.setLineDash([]);
+const[rx,ry,rw,rh]=D.roi,X1=rx*W,Y1=ry*H,X2=(rx+rw)*W,Y2=(ry+rh)*H;let n=0,rc=0,inter=0;const cl={};
+if(VID&&VID.readyState>=2){const sc=Math.min(W/VID.videoWidth,H/VID.videoHeight),vw=VID.videoWidth*sc,vh=VID.videoHeight*sc;g.fillStyle="#000";g.fillRect(0,0,W,H);g.drawImage(VID,(W-vw)/2,(H-vh)/2,vw,vh);g.fillStyle="rgba(255,177,59,.12)";g.fillRect(X1,Y1,X2-X1,Y2-Y1);g.strokeStyle="#ffb13b";g.lineWidth=2;g.strokeRect(X1,Y1,X2-X1,Y2-Y1);g.fillStyle="#fff";g.font="12px sans-serif";g.fillText("YOUR VIDEO. DETECTION RUNS IN THE REAL APP ONLY",10,18);D.n=0;D.rc=0;D.occ=0;D.cl={};requestAnimationFrame(draw);return}
+D.cars.forEach((k,i)=>{if(i>=act)return;const inz=k.x>X1&&k.x<X2;k.x+=(inz?150*(1-.85*c):150)*(k.t=="Bus"?.8:1)*dt;if(k.x>W+60)k.x=-60;
+const w=k.t=="Bus"?64:k.t=="Truck"?52:k.t=="Motorcycle"?22:40,h=k.t=="Motorcycle"?16:26,y=170+k.l*64+(32-h/2);g.fillStyle="#8b7fe8";g.fillRect(k.x,y,w,h);
+const cx=k.x+w/2,cy=y+h/2,ins=cx>X1&&cx<X2&&cy>Y1&&cy<Y2;n++;cl[k.t]=(cl[k.t]||0)+1;if(ins){rc++;inter+=w*h}
+g.strokeStyle=ins?"#ffb13b":"#6ec1ff";g.lineWidth=2;g.strokeRect(k.x-2,y-2,w+4,h+4);g.fillStyle=g.strokeStyle;g.font="11px sans-serif";g.fillText(k.t+" 0."+(70+(i*7)%25),k.x-2,y-6)});
+g.fillStyle="rgba(255,177,59,.12)";g.fillRect(X1,Y1,X2-X1,Y2-Y1);g.strokeStyle="#ffb13b";g.strokeRect(X1,Y1,X2-X1,Y2-Y1);g.fillStyle="#fff";g.font="12px sans-serif";g.fillText("SAMPLE ANIMATION, NOT REAL DETECTION",10,18);
+D.n=n;D.rc=rc;D.occ=inter/((X2-X1)*(Y2-Y1));D.cl=cl;requestAnimationFrame(draw)}draw();
+const useVid=(src,label,stream)=>{if(VID)VID.pause();VID=document.createElement("video");VID.muted=true;VID.loop=true;VID.playsInline=true;stream?VID.srcObject=src:VID.src=src;VID.play().catch(()=>{});D.label=label;$("prev").innerHTML="<b>Preview mode.</b> Your video is playing, but YOLO detection, counts and risk need the real app, so the numbers below are paused."};
+$("file").onchange=e=>{const f=e.target.files[0];if(f)useVid(URL.createObjectURL(f),f.name)};
+$("scan").onclick=async()=>{try{const s=await navigator.mediaDevices.getUserMedia({video:true});useVid(s,"Webcam (preview)",true);$("cams").innerHTML="<option>Webcam (preview)</option>"}catch(x){fail(new Error("The preview could not open a camera here. Try Upload video, or use the real app."))}};
+$("pv").onclick=()=>fail(new Error("Preview mode: the video library is in the real app. Use Upload video."));$("pp").onclick=$("pv").onclick;
+const J=(o,s=200)=>new Response(JSON.stringify(o),{status:s,headers:{"Content-Type":"application/json"}}),cp=v=>Math.max(0,Math.min(1,v));
+function dstate(){const t=performance.now(),c=cong();D.ema=D.ema==null?D.rc:.8*D.ema+.2*D.rc;const old=D.hist.length?D.hist[Math.max(0,D.hist.length-17)].e:D.ema,gr=D.ema-old;
+const comp={Q:cp(D.ema/D.cap),O:cp(D.occ/.35),G:cp(gr/4),D:cp(D.downstream)},R=.35*comp.Q+.25*comp.O+.2*comp.G+.2*comp.D,fps=13+Math.sin(t/1500)*1.5,inf=58+Math.sin(t/900)*7+c*6;
+D.hist.push({e:D.ema,fps,infer_ms:inf,vehicles:D.n,roi_count:D.rc,risk:R});if(D.hist.length>150)D.hist.shift();const r=R*100,risks={J1:r,J2:Math.max(10,r*.72),J3:Math.max(8,r*.48),J4:Math.max(8,r*.4),J5:Math.max(5,r*.32)};
+return{al:{cfg:{enabled:D.alOn,to:D.alTo,cooldown:60},providers:{twilio:false,telegram:false},log:D.alog.slice(-8),active:t-D.accT<6000},advice:dadv(R,comp,risks),st:{source:"sample",label:D.label,error:null,status:"Preview",fps,infer_ms:inf,latency_ms:inf+9,count:D.n,roi_count:D.rc,occ:D.occ,growth:gr,classes:D.cl,comp,R,frames:99,unique:0},s:D,hist:D.hist,sys:{cpu:38+c*20,ram:54},graph:{risks,edges:[["J1","J2",.7],["J2","J3",.65],["J2","J4",.45],["J3","J5",.6],["J4","J3",.3]]}}}
+window.fetch=async(u,o)=>{u=String(u);if(u=="/api/state")return J(dstate());if(u=="/api/settings"){Object.assign(D,JSON.parse(o.body));return J({})}if(u=="/api/sim"){await new Promise(r=>setTimeout(r,500));return J(dsim(JSON.parse(o.body)))}
+if(u=="/api/alerts/config"){const p=JSON.parse(o.body);if(p.to&&!/^\+\d{8,15}$/.test(p.to))return J({error:"Enter the number with country code and no spaces, like +919876543210."},400);D.alOn=p.enabled;D.alTo=p.to;return J({})}
+if(u=="/api/alerts/test"){D.alog.push({kind:"test (preview)",time:new Date().toLocaleTimeString(),img:null,results:["Preview: nothing was sent. The real app messages the number you enter."]});D.accT=performance.now();return J({ok:true})}
+if(u.startsWith("/api/videos"))return J({videos:[]});if(u=="/api/cameras")return J({cameras:[]});if(u.startsWith("/api/source")||u=="/api/export.csv")return J({error:"Preview mode: connect sources in the real app (python server.py)."},400);return J({error:"Preview mode"},404)}}
+addEventListener("resize",()=>SIM&&drawSim());probe().then(()=>{poll();setInterval(poll,300);if(DEMO)$("sumost").textContent="Preview mode: the real app checks SUMO on your computer.";else fetch("/api/sumo").then(r=>r.json()).then(sumoMsg).catch(()=>{})});
+</script></body></html>

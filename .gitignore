@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.log
+.streamlit/secrets.toml
+yolo*.pt
+outputs/*
+!outputs/.gitkeep
+data/*
+!data/.gitkeep
