@@ -442,4 +442,5 @@ Contributions, testing, and improvement suggestions are welcome.
 
 
 **GridGuard AI — AI Traffic Flow Management System**
+
 Built to explore vision-driven traffic monitoring, cascading gridlock analysis, emergency-event awareness, and adaptive traffic simulation.
